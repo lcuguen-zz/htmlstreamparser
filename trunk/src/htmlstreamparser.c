@@ -162,8 +162,8 @@ void html_parser_char_parse(HTMLSTREAMPARSER *hsp, const char c) {
 		case 12:
 		case 13:
 			if (c == '<') *s = 11;
-			else if (c == '>' && *l == 6) { *s = 0; *l = 0; h[HTML_SCRIPT] = 0; h[HTML_TAG] = 1; h[HTML_TAG_END] = 1; h[HTML_NAME_ENDED] = 1;}
-			else if (ishtmlspace(c) && *l == 6) { *s = 3; *l = 0; h[HTML_SCRIPT] = 0; h[HTML_TAG] = 1; h[HTML_SPACE] = 1; h[HTML_NAME_ENDED] = 1; }
+			else if (c == '>' && *l == 6) { *s = 0; *l = 0; h[HTML_SCRIPT] = 0; h[HTML_TAG] = 1; h[HTML_TAG_END] = 1; h[HTML_NAME_ENDED] = 1; h[HTML_CLOSING_TAG] = 1; }
+			else if (ishtmlspace(c) && *l == 6) { *s = 3; *l = 0; h[HTML_SCRIPT] = 0; h[HTML_TAG] = 1; h[HTML_SPACE] = 1; h[HTML_NAME_ENDED] = 1; h[HTML_CLOSING_TAG] = 1; }
 			else *s = 13;
 			break;
 	}
