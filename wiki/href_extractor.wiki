@@ -30,7 +30,6 @@ int main(int argc, char *argv[]) {
 	}
 	char tag[1], attr[4], val[128];
 	CURL *curl = curl_easy_init();
-	CURLcode res;
 	HTMLSTREAMPARSER *hsp = html_parser_init();
 	html_parser_set_tag_to_lower(hsp, 1);
 	html_parser_set_attr_to_lower(hsp, 1);
