@@ -1,5 +1,8 @@
 #summary It is an example of integrating htmlstreamparser with curl.
 #labels Featured
+This program extracts an attribute href value from the anchors tags
+and print it to standard out.
+
 This is an example of compiling with gcc:
 {{{
 gcc href_extractor.c -o href_extractor -lcurl -lhtmlstreamparser
