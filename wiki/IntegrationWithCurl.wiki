@@ -1,4 +1,5 @@
 #labels Featured
+# href_extractor
 {{{
 #include <stdio.h>
 #include <curl/curl.h>
@@ -18,34 +19,26 @@ static size_t write_callback(void *buffer, size_t size, size_t nmemb, void *hsp)
 	return realsize;
 }
 
-int main(void) {
+int main(int argc, char *argv[]) {
+	if (argc != 2) {
+		printf("Usage: href_extractor URL\n");
+		return EXIT_FAILURE;
+	}
 	char tag[1], attr[4], val[128];
 	CURL *curl = curl_easy_init();
 	CURLcode res;
 	HTMLSTREAMPARSER *hsp = html_parser_init();
-	if (curl && hsp) {
-		html_parser_set_tag_to_lower(hsp, 1);
-		html_parser_set_attr_to_lower(hsp, 1);
-
-		html_parser_set_tag_buffer(hsp, tag, sizeof(tag));
-		html_parser_set_attr_buffer(hsp, attr, sizeof(attr));
-		html_parser_set_val_buffer(hsp, val, sizeof(val)-1);
-
-		curl_easy_setopt(curl, CURLOPT_URL, "http://www.google.pl");
-		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
-		curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0");
-		curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1);
-		curl_easy_setopt(curl, CURLOPT_MAXREDIRS, 3);
-		curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1);
-		curl_easy_setopt(curl, CURLOPT_WRITEDATA, hsp);
-
-		res = curl_easy_perform(curl);
-		if (res != CURLE_OK) fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(res));
-
-		curl_easy_cleanup(curl);
-
-		html_parser_cleanup(hsp);
-	}
-	return 0;
+	html_parser_set_tag_to_lower(hsp, 1);
+	html_parser_set_attr_to_lower(hsp, 1);
+	html_parser_set_tag_buffer(hsp, tag, sizeof(tag));
+	html_parser_set_attr_buffer(hsp, attr, sizeof(attr));
+	html_parser_set_val_buffer(hsp, val, sizeof(val)-1);
+	curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
+	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
+	curl_easy_setopt(curl, CURLOPT_WRITEDATA, hsp);
+	curl_easy_perform(curl);
+	curl_easy_cleanup(curl);
+	html_parser_cleanup(hsp);
+	return EXIT_SUCCESS;
 }
 }}}
