@@ -1,4 +1,4 @@
-#summary href_extractor
+#summary href_extractor is a program integrating htmlstreamparser with curl
 #labels Featured
 {{{
 #include <stdio.h>
