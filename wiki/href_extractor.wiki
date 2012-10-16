@@ -1,5 +1,7 @@
 #summary It is an example of integrating htmlstreamparser with curl.
 #labels Featured
+
+= Introduction =
 This program extracts an attribute href value from the anchors tags
 and print it to standard out.
 
