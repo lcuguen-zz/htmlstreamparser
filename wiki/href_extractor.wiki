@@ -3,8 +3,7 @@
 
 This program get a remote web page using libcurl functions calls.
 <br />
-Then extracts an attribute href value from the web page
-and print it to standard out.
+Then extracts values of the attribute href from this web page and print it to standard out.
 
 This is an example of compiling with gcc:
 {{{
