@@ -1,2 +1,4 @@
 HTML stream parser ver 0.2
 - functions returning length now always returns positive value
+HTML stream parser ver 0.3
+- added function html_parser_set_val_to_lower
