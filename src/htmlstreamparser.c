@@ -186,7 +186,7 @@ void html_parser_char_parse(HTMLSTREAMPARSER *hsp, const char c) {
 	} else if (h[HTML_VALUE]) {
 		if (h[HTML_VALUE_BEGINNING]) hsp->attr_value_len = 0;
 		if (hsp->attr_value_len < hsp->attr_value_max_len)
-       if (hsp->attr_val_to_lower) hsp->attr_value[hsp->attr_value_len++] = tolower(c);
+			if (hsp->attr_val_to_lower) hsp->attr_value[hsp->attr_value_len++] = tolower(c);
 			else hsp->attr_value[hsp->attr_value_len++] = c;
 	}
 }
