@@ -65,6 +65,7 @@ typedef struct {
 	size_t inner_text_max_len;
 	char tag_name_to_lower;
 	char attr_name_to_lower;
+	char attr_val_to_lower;
 	char script_equality_len;
 } HTMLSTREAMPARSER;
 
