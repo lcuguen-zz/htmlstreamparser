@@ -1,0 +1,2 @@
+HTML stream parser ver 0.2
+- functions returning length now always returns positive value
