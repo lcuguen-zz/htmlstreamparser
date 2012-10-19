@@ -36,7 +36,7 @@ HTMLSTREAMPARSER *html_parser_reset(HTMLSTREAMPARSER *hsp) {
 	hsp->inner_text = NULL;
 	hsp->tag_name_to_lower = 0;
 	hsp->attr_name_to_lower = 0;
-  hsp->attr_val_to_lower = 0;
+	hsp->attr_val_to_lower = 0;
 	hsp->script_equality_len = 0;
 	return hsp;
 }
