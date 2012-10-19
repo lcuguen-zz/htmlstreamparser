@@ -36,6 +36,7 @@ HTMLSTREAMPARSER *html_parser_reset(HTMLSTREAMPARSER *hsp) {
 	hsp->inner_text = NULL;
 	hsp->tag_name_to_lower = 0;
 	hsp->attr_name_to_lower = 0;
+  hsp->attr_val_to_lower = 0;
 	hsp->script_equality_len = 0;
 	return hsp;
 }
@@ -184,13 +185,17 @@ void html_parser_char_parse(HTMLSTREAMPARSER *hsp, const char c) {
 			else hsp->attr_name[hsp->attr_name_len++] = c;
 	} else if (h[HTML_VALUE]) {
 		if (h[HTML_VALUE_BEGINNING]) hsp->attr_value_len = 0;
-		if (hsp->attr_value_len < hsp->attr_value_max_len) hsp->attr_value[hsp->attr_value_len++] = c;
+		if (hsp->attr_value_len < hsp->attr_value_max_len)
+       if (hsp->attr_val_to_lower) hsp->attr_value[hsp->attr_value_len++] = tolower(c);
+			else hsp->attr_value[hsp->attr_value_len++] = c;
 	}
 }
 
 void html_parser_set_tag_to_lower(HTMLSTREAMPARSER *hsp, char c) { hsp->tag_name_to_lower = c; }
 
 void html_parser_set_attr_to_lower(HTMLSTREAMPARSER *hsp, char c) { hsp->attr_name_to_lower = c; }
+
+void html_parser_set_val_to_lower(HTMLSTREAMPARSER *hsp, char c) { hsp->attr_val_to_lower = c; }
 
 
 void html_parser_set_tag_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size_t length) { hsp->tag_name = buffer; hsp->tag_name_max_len = length; }
