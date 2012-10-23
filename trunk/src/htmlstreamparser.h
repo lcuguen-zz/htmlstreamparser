@@ -140,15 +140,42 @@ int html_parser_is_in(HTMLSTREAMPARSER *hsp, int html_part);
  */
 void html_parser_char_parse(HTMLSTREAMPARSER *hsp, const char c);
 
+/*
+ * Setting the argument c to non zero value
+ * case changing a tag name char pssed to buffer
+ * to lower. Changing this while parsing a tag name
+ * affect the buffer from the current position.
+ */
 void html_parser_set_tag_to_lower(HTMLSTREAMPARSER *hsp, char c);
 
+/*
+ * Setting the argument c to non zero value
+ * case changing a attribute name char pssed to buffer
+ * to lower. Changing this while parsing a attribute name
+ * affect the buffer from the current position.
+ */
 void html_parser_set_attr_to_lower(HTMLSTREAMPARSER *hsp, char c);
 
+/*
+ * Setting the argument c to non zero value
+ * case changing a attribute value char pssed to buffer
+ * to lower. Changing this while parsing a attribute value
+ * affect the buffer from the current position.
+ */
 void html_parser_set_val_to_lower(HTMLSTREAMPARSER *hsp, char c);
 
-
+/*
+ * The argument buffer points to an array
+ * to be used as the buffer of current tag name.
+ * The argument length is a max array size.
+ */
 void html_parser_set_tag_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size_t length);
 
+/*
+ * Release the buffer of current tag name.
+ * Now the buffer is a null pointer
+ * and the length of the name always will be 0.
+ */
 void html_parser_release_tag_buffer(HTMLSTREAMPARSER *hsp);
 
 size_t html_parser_tag_length(HTMLSTREAMPARSER *hsp);
@@ -159,9 +186,18 @@ char* html_parser_tag(HTMLSTREAMPARSER *hsp);
 
 int html_parser_cmp_tag(HTMLSTREAMPARSER *hsp, char *p, size_t l);
 
-
+/*
+ * The argument buffer points to an array
+ * to be used as the buffer of current attribute name.
+ * The argument length is a max array size.
+ */
 void html_parser_set_attr_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size_t length);
 
+/*
+ * Release the buffer of current attribute name.
+ * Now the buffer is a null pointer
+ * and the length of the name always will be 0.
+ */
 void html_parser_release_attr_buffer(HTMLSTREAMPARSER *hsp);
 
 size_t html_parser_attr_length(HTMLSTREAMPARSER *hsp);
@@ -170,9 +206,18 @@ char* html_parser_attr(HTMLSTREAMPARSER *hsp);
 
 int html_parser_cmp_attr(HTMLSTREAMPARSER *hsp, char *p, size_t l);
 
-
+/*
+ * The argument buffer points to an array
+ * to be used as the buffer of current attribute value.
+ * The argument length is a max array size.
+ */
 void html_parser_set_val_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size_t length);
 
+/*
+ * Release the buffer of current attribute value.
+ * Now the buffer is a null pointer
+ * and the length of the value always will be 0.
+ */
 void html_parser_release_val_buffer(HTMLSTREAMPARSER *hsp);
 
 size_t html_parser_val_length(HTMLSTREAMPARSER *hsp);
@@ -181,9 +226,18 @@ char* html_parser_val(HTMLSTREAMPARSER *hsp);
 
 int html_parser_cmp_val(HTMLSTREAMPARSER *hsp, char *p, size_t l);
 
-
+/*
+ * The argument buffer points to an array
+ * to be used as the buffer of current inner text.
+ * The argument length is a max array size.
+ */
 void html_parser_set_inner_text_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size_t length);
 
+/*
+ * Release the buffer of current inner text.
+ * Now the buffer is a null pointer
+ * and the length of the inner text always will be 0.
+ */
 void html_parser_release_inner_text_buffer(HTMLSTREAMPARSER *hsp);
 
 size_t html_parser_inner_text_length(HTMLSTREAMPARSER *hsp);
