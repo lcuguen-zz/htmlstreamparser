@@ -144,6 +144,8 @@ void html_parser_set_tag_to_lower(HTMLSTREAMPARSER *hsp, char c);
 
 void html_parser_set_attr_to_lower(HTMLSTREAMPARSER *hsp, char c);
 
+void html_parser_set_val_to_lower(HTMLSTREAMPARSER *hsp, char c);
+
 
 void html_parser_set_tag_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size_t length);
 
