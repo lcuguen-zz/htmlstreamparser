@@ -69,24 +69,75 @@ typedef struct {
 	char script_equality_len;
 } HTMLSTREAMPARSER;
 
+/*
+ * Resets the parser to its initial state
+ * and release all the buffers.
+ */
 HTMLSTREAMPARSER *html_parser_reset(HTMLSTREAMPARSER *hsp);
 
+/*
+ * Initializes a new parser instance.
+ * Returns a pointer to the new instance
+ * or NULL if the initialization fails.
+ * Run function html_parser_cleanup to
+ * deallocate all previsouly allocated memory.
+ */
 HTMLSTREAMPARSER *html_parser_init();
 
+/*
+ * Deallocate all previously allocated memory
+ * by the function html_parser_init.
+ */
 void html_parser_cleanup(HTMLSTREAMPARSER *hsp);
 
+/*
+ * Returns true if the char specified by the chr argument
+ * is the HTML whitespace.
+ */
 inline int ishtmlspace(char chr);
 
+/*
+ * Strip HTML whitespace from the end of a string
+ * in a place. Returns a reference to the string.
+ * Modifies the len argument.
+ */
 char *html_parser_rtrim(char *src, size_t *len);
 
+/*
+ * Strip HTML whitespace from the beginning of a string
+ * in a place. Returns a reference to the string.
+ * Modifies the len argument.
+ */
 char *html_parser_ltrim(char *src, size_t *len);
 
+/*
+ * Strip HTML whitespace from the beginning and end
+ * of a string in a place. Returns a reference to the string.
+ * Modifies the len argument.
+ */
 char *html_parser_trim(char *src, size_t *len);
 
+/*
+ * Replace a continuous HTML whitespace strings
+ * with the single space char in a place.
+ * Returns a reference to the string.
+ * Modifies the len argument.
+ */
 char *html_parser_replace_spaces(char *src, size_t *len);
 
+/*
+ * Returns 1 (true) if the parser is inside a part of HTML code
+ * specified by the html_part argument otherwise returns 0.
+ * Consider that the parser can be in the HTML_TAG
+ * or HTML_NAME or HTML_NAME_BEGINNING on the same time.
+ */
 int html_parser_is_in(HTMLSTREAMPARSER *hsp, int html_part);
 
+/*
+ * Parse the char specified by the chr argument.
+ * For correct parsing all the HTML code
+ * must be passed with correct order.
+ */
 void html_parser_char_parse(HTMLSTREAMPARSER *hsp, const char c);
 
 void html_parser_set_tag_to_lower(HTMLSTREAMPARSER *hsp, char c);
@@ -99,6 +150,8 @@ void html_parser_set_tag_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size_t leng
 void html_parser_release_tag_buffer(HTMLSTREAMPARSER *hsp);
 
 size_t html_parser_tag_length(HTMLSTREAMPARSER *hsp);
+
+/* Returns reference to a tag name buffer. */
 
 char* html_parser_tag(HTMLSTREAMPARSER *hsp);
 
