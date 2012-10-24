@@ -179,12 +179,24 @@ void html_parser_set_tag_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size_t leng
  */
 void html_parser_release_tag_buffer(HTMLSTREAMPARSER *hsp);
 
+/*
+ * Returns the tag name length
+ * or 0 if still parsing the tag name.
+ * Set the tag name length to 0
+ * at a second tag name beginning.
+ */
 size_t html_parser_tag_length(HTMLSTREAMPARSER *hsp);
 
-/* Returns reference to a tag name buffer. */
-
+/*
+ * Returns a reference to the tag name buffer.
+ */
 char* html_parser_tag(HTMLSTREAMPARSER *hsp);
 
+/*
+ * Compares the tag name and the string pointed by p.
+ * The argument l is a string length.
+ * Returns 1 for equality otherwise returns 0.
+ */
 int html_parser_cmp_tag(HTMLSTREAMPARSER *hsp, char *p, size_t l);
 
 /*
@@ -202,10 +214,25 @@ void html_parser_set_attr_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size_t len
  */
 void html_parser_release_attr_buffer(HTMLSTREAMPARSER *hsp);
 
+/*
+ * Returns the attribute name length
+ * or 0 if still parsing the attribute name.
+ * Set the attribute name length to 0
+ * at a second attribute name beginning
+ * or a tag name beggining.
+ */
 size_t html_parser_attr_length(HTMLSTREAMPARSER *hsp);
 
+/*
+ * Returns a reference to the attribute name buffer.
+ */
 char* html_parser_attr(HTMLSTREAMPARSER *hsp);
 
+/*
+ * Compares the attribute name and the string pointed by p.
+ * The argument l is a string length.
+ * Returns 1 for equality otherwise returns 0.
+ */
 int html_parser_cmp_attr(HTMLSTREAMPARSER *hsp, char *p, size_t l);
 
 /*
@@ -223,10 +250,26 @@ void html_parser_set_val_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size_t leng
  */
 void html_parser_release_val_buffer(HTMLSTREAMPARSER *hsp);
 
+/*
+ * Returns the attribute value
+ * 0 if still parsing the attribute value.
+ * Set the attribute value length to 0
+ * at a second attribute value beginning
+ * or a attribute name beginning
+ * or a tag name beggining.
+ */
 size_t html_parser_val_length(HTMLSTREAMPARSER *hsp);
 
+/*
+ * Returns a reference to the attribute value buffer.
+ */
 char* html_parser_val(HTMLSTREAMPARSER *hsp);
 
+/*
+ * Compares the attribute value and the string pointed by p.
+ * The argument l is a string length.
+ * Returns 1 for equality otherwise returns 0.
+ */
 int html_parser_cmp_val(HTMLSTREAMPARSER *hsp, char *p, size_t l);
 
 /*
@@ -244,9 +287,23 @@ void html_parser_set_inner_text_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size
  */
 void html_parser_release_inner_text_buffer(HTMLSTREAMPARSER *hsp);
 
+/*
+ * Returns the tag inner text
+ * 0 if still parsing the inner text.
+ * Set the inner text length to 0
+ * at a second inner text beginning
+ */
 size_t html_parser_inner_text_length(HTMLSTREAMPARSER *hsp);
 
+/*
+ * Returns a reference to the inner text buffer.
+ */
 char* html_parser_inner_text(HTMLSTREAMPARSER *hsp);
 
+/*
+ * Compares the innet text and the string pointed by p.
+ * The argument l is a string length.
+ * Returns 1 for equality otherwise returns 0.
+ */
 int html_parser_cmp_inner_text(HTMLSTREAMPARSER *hsp, char *p, size_t l);
 
