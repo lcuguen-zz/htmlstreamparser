@@ -181,11 +181,20 @@ void html_parser_release_tag_buffer(HTMLSTREAMPARSER *hsp);
 
 /*
  * Returns the tag name length
+ * not bigger then a buffer size
  * or 0 if still parsing the tag name.
- * Set the tag name length to 0
+ * A parser set the tag name length to 0
  * at a second tag name beginning.
  */
 size_t html_parser_tag_length(HTMLSTREAMPARSER *hsp);
+
+/*
+ * Returns the tag name real length
+ * can be bigger then a buffer size
+ * A parser set the tag name real length to 0
+ * at a second tag name beginning.
+ */
+size_t html_parser_tag_real_length(HTMLSTREAMPARSER *hsp);
 
 /*
  * Returns a reference to the tag name buffer.
@@ -216,12 +225,22 @@ void html_parser_release_attr_buffer(HTMLSTREAMPARSER *hsp);
 
 /*
  * Returns the attribute name length
+ * not bigger then a buffer size
  * or 0 if still parsing the attribute name.
- * Set the attribute name length to 0
+ * A parser set the attribute name length to 0
  * at a second attribute name beginning
  * or a tag name beggining.
  */
 size_t html_parser_attr_length(HTMLSTREAMPARSER *hsp);
+
+/*
+ * Returns the attribute name real length
+ * can be bigger then a buffer size
+ * A parser set the attribute name real length to 0
+ * at a second attribute name beginning
+ * or a tag name beggining.
+ */
+size_t html_parser_attr_real_length(HTMLSTREAMPARSER *hsp);
 
 /*
  * Returns a reference to the attribute name buffer.
@@ -251,14 +270,25 @@ void html_parser_set_val_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size_t leng
 void html_parser_release_val_buffer(HTMLSTREAMPARSER *hsp);
 
 /*
- * Returns the attribute value
- * 0 if still parsing the attribute value.
- * Set the attribute value length to 0
+ * Returns the attribute value length
+ * not bigger then a buffer size
+ * or 0 if still parsing the attribute value.
+ * A parser set the attribute value length to 0
  * at a second attribute value beginning
  * or a attribute name beginning
  * or a tag name beggining.
  */
 size_t html_parser_val_length(HTMLSTREAMPARSER *hsp);
+
+/*
+ * Returns the attribute value real length
+ * can be bigger then a buffer size
+ * A parser set the attribute value real length to 0
+ * at a second attribute value beginning
+ * or a attribute name beginning
+ * or a tag name beggining.
+ */
+size_t html_parser_val_real_length(HTMLSTREAMPARSER *hsp);
 
 /*
  * Returns a reference to the attribute value buffer.
@@ -288,12 +318,21 @@ void html_parser_set_inner_text_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size
 void html_parser_release_inner_text_buffer(HTMLSTREAMPARSER *hsp);
 
 /*
- * Returns the tag inner text
- * 0 if still parsing the inner text.
- * Set the inner text length to 0
- * at a second inner text beginning
+ * Returns the inner text length
+ * not bigger then a buffer size
+ * or 0 if still parsing the inner text.
+ * A parser set the inner text length to 0
+ * at a second inner text beginning.
  */
 size_t html_parser_inner_text_length(HTMLSTREAMPARSER *hsp);
+
+/*
+ * Returns the inner text real length
+ * can be bigger then a buffer size
+ * A parser set the inner text real length to 0
+ * at a second inner text beginning.
+ */
+size_t html_parser_inner_text_real_length(HTMLSTREAMPARSER *hsp);
 
 /*
  * Returns a reference to the inner text buffer.
