@@ -30,7 +30,7 @@ HTMLSTREAMPARSER *html_parser_reset(HTMLSTREAMPARSER *hsp) {
 	hsp->attr_name_len = 0;
 	hsp->attr_value_len = 0;
 	hsp->inner_text_len = 0;
-  hsp->tag_name_real_len = 0;
+	hsp->tag_name_real_len = 0;
 	hsp->attr_name_real_len = 0;
 	hsp->attr_value_real_len = 0;
 	hsp->inner_text_real_len = 0;
