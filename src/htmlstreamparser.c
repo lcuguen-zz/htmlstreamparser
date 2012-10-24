@@ -177,7 +177,7 @@ void html_parser_char_parse(HTMLSTREAMPARSER *hsp, const char c) {
 	if (h[HTML_INNER_TEXT]) {
 		if (h[HTML_INNER_TEXT_BEGINNING]) { hsp->inner_text_len = 0; hsp->inner_text_real_len = 0; }
 		if (hsp->inner_text_len < hsp->inner_text_max_len) hsp->inner_text[hsp->inner_text_len++] = c;
-		 hsp->inner_text_real_len++;
+		hsp->inner_text_real_len++;
 	} else if (h[HTML_NAME] || *s == 12 || *s == 13) {
 		if (h[HTML_NAME_BEGINNING] || *s == 12) {
 			hsp->tag_name_len = 0; hsp->attr_name_len = 0; hsp->attr_value_len = 0;
@@ -191,17 +191,17 @@ void html_parser_char_parse(HTMLSTREAMPARSER *hsp, const char c) {
 		if (h[HTML_ATTRIBUTE_BEGINNING]) {
 			hsp->attr_name_len = 0; hsp->attr_value_len = 0;
 			hsp->attr_name_real_len = 0; hsp->attr_value_real_len = 0;
-    }
+		}
 		if (hsp->attr_name_len < hsp->attr_name_max_len)
 			if (hsp->attr_name_to_lower) hsp->attr_name[hsp->attr_name_len++] = tolower(c);
 			else hsp->attr_name[hsp->attr_name_len++] = c;
-    hsp->attr_name_real_len++;
+		hsp->attr_name_real_len++;
 	} else if (h[HTML_VALUE]) {
 		if (h[HTML_VALUE_BEGINNING]) { hsp->attr_value_len = 0; hsp->attr_value_real_len = 0; }
 		if (hsp->attr_value_len < hsp->attr_value_max_len)
 			if (hsp->attr_val_to_lower) hsp->attr_value[hsp->attr_value_len++] = tolower(c);
 			else hsp->attr_value[hsp->attr_value_len++] = c;
-    hsp->attr_value_real_len++;
+		hsp->attr_value_real_len++;
 	}
 }
 
