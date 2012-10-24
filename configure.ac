@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT([htmlstreamparser], [0.3])
+AC_INIT([htmlstreamparser], [0.4])
 AM_INIT_AUTOMAKE
 LT_INIT
 AC_CONFIG_SRCDIR([src/htmlstreamparser.c])
