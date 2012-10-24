@@ -30,6 +30,10 @@ HTMLSTREAMPARSER *html_parser_reset(HTMLSTREAMPARSER *hsp) {
 	hsp->attr_name_len = 0;
 	hsp->attr_value_len = 0;
 	hsp->inner_text_len = 0;
+  hsp->tag_name_real_len = 0;
+	hsp->attr_name_real_len = 0;
+	hsp->attr_value_real_len = 0;
+	hsp->inner_text_real_len = 0;
 	hsp->tag_name = NULL;
 	hsp->attr_name = NULL;
 	hsp->attr_value = NULL;
@@ -171,23 +175,33 @@ void html_parser_char_parse(HTMLSTREAMPARSER *hsp, const char c) {
 	if (*s == 2 || *s == 13) if (*l >= 0 && *l < 6) if (script[*l] == tolower(c)) (*l)++; else *l = -1; else *l = -1;
 
 	if (h[HTML_INNER_TEXT]) {
-		if (h[HTML_INNER_TEXT_BEGINNING]) hsp->inner_text_len = 0;
+		if (h[HTML_INNER_TEXT_BEGINNING]) { hsp->inner_text_len = 0; hsp->inner_text_real_len = 0; }
 		if (hsp->inner_text_len < hsp->inner_text_max_len) hsp->inner_text[hsp->inner_text_len++] = c;
+		 hsp->inner_text_real_len++;
 	} else if (h[HTML_NAME] || *s == 12 || *s == 13) {
-		if (h[HTML_NAME_BEGINNING] || *s == 12) { hsp->tag_name_len = 0; hsp->attr_name_len = 0; hsp->attr_value_len = 0; }
+		if (h[HTML_NAME_BEGINNING] || *s == 12) {
+			hsp->tag_name_len = 0; hsp->attr_name_len = 0; hsp->attr_value_len = 0;
+			hsp->tag_name_real_len = 0; hsp->attr_name_real_len = 0; hsp->attr_value_real_len = 0;
+		}
 		if (hsp->tag_name_len < hsp->tag_name_max_len)
 			if (hsp->tag_name_to_lower) hsp->tag_name[hsp->tag_name_len++] = tolower(c);
 			else hsp->tag_name[hsp->tag_name_len++] = c;
+		hsp->tag_name_real_len++;
 	} else if (h[HTML_ATTRIBUTE]) {
-		if (h[HTML_ATTRIBUTE_BEGINNING]) { hsp->attr_name_len = 0; hsp->attr_value_len = 0; }
+		if (h[HTML_ATTRIBUTE_BEGINNING]) {
+			hsp->attr_name_len = 0; hsp->attr_value_len = 0;
+			hsp->attr_name_real_len = 0; hsp->attr_value_real_len = 0;
+    }
 		if (hsp->attr_name_len < hsp->attr_name_max_len)
 			if (hsp->attr_name_to_lower) hsp->attr_name[hsp->attr_name_len++] = tolower(c);
 			else hsp->attr_name[hsp->attr_name_len++] = c;
+    hsp->attr_name_real_len++;
 	} else if (h[HTML_VALUE]) {
-		if (h[HTML_VALUE_BEGINNING]) hsp->attr_value_len = 0;
+		if (h[HTML_VALUE_BEGINNING]) { hsp->attr_value_len = 0; hsp->attr_value_real_len = 0; }
 		if (hsp->attr_value_len < hsp->attr_value_max_len)
 			if (hsp->attr_val_to_lower) hsp->attr_value[hsp->attr_value_len++] = tolower(c);
 			else hsp->attr_value[hsp->attr_value_len++] = c;
+    hsp->attr_value_real_len++;
 	}
 }
 
@@ -204,6 +218,8 @@ void html_parser_release_tag_buffer(HTMLSTREAMPARSER *hsp) { hsp->tag_name = NUL
 
 size_t html_parser_tag_length(HTMLSTREAMPARSER *hsp) { if (!hsp->html_part[HTML_NAME] && hsp->parser_state != 12 && hsp->parser_state != 13) return hsp->tag_name_len; else return 0; }
 
+size_t html_parser_tag_real_length(HTMLSTREAMPARSER *hsp) { return hsp->tag_name_real_len; }
+
 char* html_parser_tag(HTMLSTREAMPARSER *hsp) { return hsp->tag_name; }
 
 int html_parser_cmp_tag(HTMLSTREAMPARSER *hsp, char *p, size_t l) { if (html_parser_tag_length(hsp) == l) if (strncmp(p, hsp->tag_name, l) == 0) return 1; return 0; }
@@ -214,6 +230,8 @@ void html_parser_set_attr_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size_t len
 void html_parser_release_attr_buffer(HTMLSTREAMPARSER *hsp) { hsp->attr_name = NULL; hsp->attr_name_len = 0; hsp->attr_name_max_len = 0; }
 
 size_t html_parser_attr_length(HTMLSTREAMPARSER *hsp) { if (!hsp->html_part[HTML_ATTRIBUTE]) return hsp->attr_name_len; else return 0; }
+
+size_t html_parser_attr_real_length(HTMLSTREAMPARSER *hsp) { return hsp->attr_name_real_len; }
 
 char* html_parser_attr(HTMLSTREAMPARSER *hsp) { return hsp->attr_name; }
 
@@ -226,6 +244,8 @@ void html_parser_release_val_buffer(HTMLSTREAMPARSER *hsp) { hsp->attr_value = N
 
 size_t html_parser_val_length(HTMLSTREAMPARSER *hsp) { if (!hsp->html_part[HTML_VALUE]) return hsp->attr_value_len; else return 0; }
 
+size_t html_parser_val_real_length(HTMLSTREAMPARSER *hsp) { return hsp->attr_value_real_len; }
+
 char* html_parser_val(HTMLSTREAMPARSER *hsp) { return hsp->attr_value; }
 
 int html_parser_cmp_val(HTMLSTREAMPARSER *hsp, char *p, size_t l) { if (html_parser_val_length(hsp) == l) if (strncmp(p, hsp->attr_value, l) == 0) return 1; return 0; }
@@ -236,6 +256,8 @@ void html_parser_set_inner_text_buffer(HTMLSTREAMPARSER *hsp, char *buffer, size
 void html_parser_release_inner_text_buffer(HTMLSTREAMPARSER *hsp) { hsp->inner_text = NULL; hsp->inner_text_len = 0; hsp->inner_text_max_len = 0; }
 
 size_t html_parser_inner_text_length(HTMLSTREAMPARSER *hsp) { if (!hsp->html_part[HTML_INNER_TEXT]) return hsp->inner_text_len; else return 0; }
+
+size_t html_parser_inner_text_real_length(HTMLSTREAMPARSER *hsp) { return hsp->inner_text_real_len; }
 
 char* html_parser_inner_text(HTMLSTREAMPARSER *hsp) { return hsp->inner_text; }
 
