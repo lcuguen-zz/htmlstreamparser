@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 		printf("Usage: %s URL\n", argv[0]);
 		return EXIT_FAILURE;
 	}
-	char tag[1], attr[4], val[128];
+	char tag[2], attr[5], val[128];
 
 	CURL *curl = curl_easy_init();
 
